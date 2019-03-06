@@ -5,6 +5,7 @@ from starlette.middleware.cors import CORSMiddleware
 import uvicorn, aiohttp, asyncio
 from io import BytesIO
 
+import numpy as np
 from fastai import *
 from fastai.vision import *
 
@@ -53,8 +54,17 @@ async def analyze(request):
     data = await request.form()
     img_bytes = await (data['file'].read())
     img = open_image(BytesIO(img_bytes))
-    prediction = learn.predict(img)[0]
-    return JSONResponse({'result': str(prediction)})
+    prediction, _, probs = learn.predict(img)
+    
+    probs = np.array(probs)
+    max_arg = np.argmax(probs)
+
+    if probs[max_arg] >= 0.8:
+        result = prediction
+    else:
+        result = "Sorry we coudn't recognise this plant as the probability is less than 0.8" 
+    
+    return JSONResponse({'result': str(result)})
 
 if __name__ == '__main__':
     if 'serve' in sys.argv: uvicorn.run(app=app, host='0.0.0.0', port=5042)
