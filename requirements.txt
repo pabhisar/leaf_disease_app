@@ -4,7 +4,7 @@ torch==1.4.0+cpu
 torchvision==0.5.0+cpu
 fastai==1.0.61
 starlette
-uvicorn==0.3.32
+uvicorn
 python-multipart
 aiofiles
 aiohttp
