@@ -9,6 +9,12 @@ RUN pip install --upgrade pip
 
 RUN pip install --no-cache-dir -r requirements.txt --upgrade
 
+RUN pip install gdown
+
+RUN gdown -O leaf_model.pkl --id 1E2v1kURSb_5jgWM-2fASBBSyQxlKy_y1
+
+# COPY leaf_model.pkl app/
+
 COPY app app/
 
 RUN python app/server.py

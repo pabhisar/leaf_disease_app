@@ -10,9 +10,9 @@ from fastai import *
 from fastai.vision import *
 
 export_file_url = 'https://drive.google.com/uc?export=download&id=1jCBrrc28mgLAodN9yvSMDFvNOG2Dd-a9'
-export_file_name = 'export.pkl'
+export_file_name = 'leaf_model.pkl'
 
-classes = ['Bramhi', 'Tulsi', 'aleovera', 'mint']
+classes = ['Anthracnose', 'Golmich', 'Healthy', 'Powderymildew']
 path = Path(__file__).parent
 
 app = Starlette()
@@ -27,7 +27,7 @@ async def download_file(url, dest):
             with open(dest, 'wb') as f: f.write(data)
 
 async def setup_learner():
-    await download_file(export_file_url, path/export_file_name)
+    # await download_file(export_file_url, path/export_file_name)
     try:
         learn = load_learner(path, export_file_name)
         return learn
