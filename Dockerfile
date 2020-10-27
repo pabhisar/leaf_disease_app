@@ -13,9 +13,9 @@ RUN pip install gdown
 
 RUN gdown -O leaf_model.pkl --id 1E2v1kURSb_5jgWM-2fASBBSyQxlKy_y1
 
-# COPY leaf_model.pkl app/
-
 COPY app app/
+
+COPY leaf_model.pkl app/
 
 RUN python app/server.py
 
