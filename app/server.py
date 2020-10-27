@@ -12,7 +12,7 @@ from fastai.vision import *
 export_file_url = 'https://drive.google.com/uc?export=download&id=1jCBrrc28mgLAodN9yvSMDFvNOG2Dd-a9'
 export_file_name = 'leaf_model.pkl'
 
-classes = ['Anthracnose', 'Golmich', 'Healthy', 'Powderymildew']
+classes = ['Anthracnose', 'Golmich', 'Healthy', 'Powderymildew', 'Redrust']
 path = Path(__file__).parent
 
 app = Starlette()
@@ -59,12 +59,7 @@ async def analyze(request):
     probs = np.array(probs)
     max_arg = np.argmax(probs)
 
-    if probs[max_arg] >= 0.8:
-        result = prediction
-    else:
-        result = "Sorry we coudn't recognise this plant as the probability is less than 0.8" 
-    
-    return JSONResponse({'result': str(result)})
+    return JSONResponse({'result': str(prediction)})
 
 if __name__ == '__main__':
     if 'serve' in sys.argv: uvicorn.run(app=app, host='0.0.0.0', port=5042)
